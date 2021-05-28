@@ -1,3 +1,7 @@
+##Python Socket Client over Wifi(CC3220s AT) and Ethernet(imX6ull)
+#Devp=ARV
+
+
 import time
 import socket
 import serial
