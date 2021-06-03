@@ -1,7 +1,3 @@
-##Python Socket Client over Wifi(CC3220s AT) and Ethernet(imX6ull)
-#Devp=ARV
-
-
 import time
 import socket
 import serial
@@ -84,16 +80,27 @@ def WLAN_connect():
 
 
 if PHY==1:
-    wifi=serial.Serial('COM8',115200,timeout=5)
+   # wifi=serial.Serial('COM8',115200,timeout=5)
     wifi=serial.Serial('/dev/ttyACM0',115200,timeout=5)
     WLAN_connect()
     time.sleep(1)
 
 Sock_create()
 Sock_connect(SERVER_IP,PORT)
-d=(clock.now()).strftime("D%d%m%yT%H%M")
-Sock_send(d)
-Sock_close()
+ctr=0
+enable=open("/sys/devices/virtual/misc/FreescaleAccelerometer/enable","w")
+enable.write('1')
+while ctr<10:
+    d=(clock.now()).strftime("D%d%m%yT%H%M")
+    with open("/sys/devices/virtual/misc/FreescaleAccelerometer/data","r") as val:
+        r=val.readline()
+        reading=d+':'+r
+    Sock_send(reading)
+    time.sleep(3)
+    ctr+=1
 
+Sock_close()
+enable.write('0')
+enable.close()
 if PHY==1:
     wifi.close()
