@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Gateway Manager</title>
+</head>
+<style>
+h1 {text-align: center;}
+</style>
+<body>
+	<h1>Gateway Manager</h1>
+	{% for row in device_data %}
+	<fieldset>
+	<legend><h3>Device</h3></legend>
+		<p><b>DEVICE ID:</b>{{row["dev_ID"]}}</p>	
+		<p><b>NAME:</b>{{row["dev_NAME"]}}</p>
+		<p><b>N/W INTERFACE:</b>{{row["dev_NETIF"]}}</p>	
+		<p><b>IPv4:</b>{{row["dev_IP"]}}</p>
+		<p><b>STATUS:</b>{{row["dev_STATUS"]}}</p>
+		<form action="{{url_for('update')}}"method="POST">
+			<input type="submit" value="Edit" name="device"/>
+		</form>
+	</fieldset>
+	{% endfor %}
+	{% for row in cloud_data %}
+	<fieldset>
+	<legend><h3>Cloud</h3></legend>
+	
+		<p><b>PROTOCOL:</b>{{row["cloud_PRO"]}}</p>	
+		<p><b>TYPE:</b>{{row["cloud_TYPE"]}}</p>
+		<p><b>HOST ADDRESS:</b>{{row["cloud_HOST"]}}</p>	
+		<p><b>PORT:</b>{{row["cloud_PORT"]}}</p>
+		<form action="{{url_for('update')}}"method="POST">
+			<input type="submit" value="Edit" name="cloud"/>
+		</form>
+	
+	</fieldset>
+	{% endfor %}
+	{% for row in node_data %}
+	<fieldset>
+	<legend><h3>Node</h3></legend>
+	
+		<p><b>TYPE:</b>{{row["node_TYPE"]}}</p>	
+		<p><b>COUNT:</b>{{row["node_COUNT"]}}</p>
+		<p><b>CH_ID:</b>{{row["node_CHID"]}}</p>
+		<form action="{{url_for('update')}}"method="POST">
+			<input type="submit" value="Edit" name="node"/>
+		</form>
+	
+	</fieldset>
+	{% endfor %}
+	{% for row in cloud_data %}
+	<fieldset>
+	<legend><h3>Gateway</h3></legend>
+	
+		<p><b>NODE STATUS:</b>{{row["gw_node"]}}</p>	
+		<p><b>CLOUD STATUS:</b>{{row["gw_cloud"]}}</p>
+		<form action="{{url_for('update')}}"method="POST">
+			<input type="submit" value="Edit" name="gateway"/>
+		</form>
+	</fieldset>
+	{% endfor %}
+</body>
+</html>
+	
+	
+	
+	
